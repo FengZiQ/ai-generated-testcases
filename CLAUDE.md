@@ -9,21 +9,21 @@
 
 ## 模式一：新产品初始化
 
-当用户说"初始化新产品"或"初始化 [产品名]"时，执行此模式。
+当用户说"初始化新产品"或"初始化 <产品名>"时，执行此模式。一个项目实例可管理多个产品，每个产品在 `products/` 下按产品名分目录存放。
 
 工作流：`workflow/phase1-init/` 中的三步流程
 
 **输入**：新产品需求文档（Wiki/Word/Excel/PDF/Markdown）
 **输出**：
-- 产品概述（存储到 `products/<product-name>/product-overview.md`）
-- 各模块功能点清单（存储到 `products/<product-name>/modules/`）
+- 产品概述（存储到 `products/<产品名>/product-overview.md`）
+- 各模块功能点清单（存储到 `products/<产品名>/modules/`）
 - 模块间依赖关系
 - **行业分类与适用法规清单**
 
 ## 模式二：迭代测试
 
 当用户提供新迭代的需求文档时，执行此模式。
-**前提**：产品已完成初始化，相关信息在 `products/<product-name>/` 中。
+**前提**：产品已完成初始化，相关信息在 `products/<产品名>/` 中。
 
 工作流：`workflow/phase2-iteration/` 中的四步流程
 
@@ -103,7 +103,7 @@ AUTH-STT-001：[P0] 验证连续5次登录失败后账户锁定 [回归]
 ## 测试点 ID 命名
 
 格式：`[MODULE]-[TECH]-[SEQ]`
-- MODULE: 模块缩写（如 DOCS/RESP/SEAL/GEN/SYS）
+- MODULE: 模块缩写（不同产品独立定义，如 Product A 用 DOCS/RESP/SEAL/GEN/SYS）
 - TECH: 测试设计技术码（EQP/BVA/DCS/STT/SEC/PERF/CMP）
 - SEQ: 3位数字序号，每个模块+技术组合从001开始编号
 - 从ID可识别所属模块和使用的测试设计技术
@@ -121,7 +121,7 @@ AUTH-STT-001：[P0] 验证连续5次登录失败后账户锁定 [回归]
 | `reference/quality-criteria.md` | 质量标准（含优先级、粒度、回归策略、完成标准） |
 | `workflow/phase1-init/` | 初始化阶段的三步流程 |
 | `workflow/phase2-iteration/` | 迭代测试阶段的四步流程 |
-| `products/<name>/` | 已初始化的产品知识库 |
+| `products/<name>/` | 已初始化的产品知识库（可平行存在多个产品，如 `products/product-a/`、`products/product-b/`） |
 | `my-mind-maps/` | 思维导图输出目录 |
 
 # 质量标准
@@ -151,3 +151,29 @@ AUTH-STT-001：[P0] 验证连续5次登录失败后账户锁定 [回归]
 - **安全性**：生成测试点时必须查阅 `techniques/security-testing.md`，对每个模块评估安全风险并生成 SEC 测试点
 - **性能**：生成测试点时必须查阅 `techniques/performance-testing.md`，根据产品类型推断合理阈值并生成 PERF 测试点
 - **探索式测试**：每次迭代须查阅 `techniques/exploratory-testing.md`，生成探索式测试Session建议
+
+# 多产品内存策略
+
+本项目管理多个产品，记忆系统按以下分层策略使用：
+
+## 产品级记忆（持久化到产品目录）
+
+存储在 `products/<产品名>/product-habits.md` 中，包括：
+- 该产品的模块缩写、字段命名习惯
+- 该产品特有的业务规则和字段行为模式
+- 该产品历史迭代中积累的产品特定知识
+
+**修改方式**：直接编辑 `products/<产品名>/product-habits.md`
+
+## 团队级记忆（持久化到 Claude 内存）
+
+存储在 `C:\Users\wuyiy\.claude\projects\D--claude-ai-generated-testcases\memory\` 中：
+- **user 类型**：测试团队的角色、分工、偏好
+- **feedback 类型**：团队对输出质量、格式、风格的反馈
+- **project 类型**：跨产品的项目级信息
+
+**文件命名规范**：与产品相关的内存文件在文件名中体现产品归属，如 `project-product-a-patterns.md`、`project-product-b-patterns.md`
+
+## 读取优先级
+
+先读 `products/<产品名>/product-habits.md`（产品级），后读 Claude 内存（团队级）。产品级记忆优先于团队级记忆。

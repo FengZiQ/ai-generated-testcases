@@ -8,3 +8,5 @@ products/*
 # 输出内容目录不提交
 my-mind-maps/*
 !my-mind-maps/.gitkeep
+
+.idea/
