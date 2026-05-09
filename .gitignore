@@ -1,0 +1,10 @@
+# 需求文档目录不提交
+requirements/*
+
+# 产品内容目录不提交
+products/*
+!products/.gitkeep
+
+# 输出内容目录不提交
+my-mind-maps/*
+!my-mind-maps/.gitkeep
