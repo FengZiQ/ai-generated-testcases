@@ -1,6 +1,6 @@
 # AI 生成测试用例框架
 
-> 基于 Claude Code 的智能测试用例生成系统 —— 输入产品需求文档，输出结构化测试点清单和思维导图
+> 适用于敏捷开发团队的基于 Claude Code 的智能测试用例生成系统 —— 输入产品需求文档，输出结构化测试点清单和思维导图
 
 ## 项目概述
 
@@ -39,6 +39,8 @@
 
 每个产品独立初始化，完成后与其他产品共存于 `products/` 目录下。Claude Code 会执行 **初始化三步流程**：
 
+> 💡 **参照示例**：`products/example-mac-cli/` 目录下有一个完整的 Mac 命令行工具初始化示例，展示了初始化的输入需求和各产出物的格式。
+
 1. 📖 **解析文档** — 读取并理解你的需求文档内容
 2. 🧩 **提取模块** — 识别产品模块结构、功能点、行业分类
 3. 🗺️ **构建知识库** — 生成产品概述和功能地图，保存到 `products/<产品名>/`
@@ -61,6 +63,8 @@
 ```
 
 Claude Code 会执行 **迭代测试四步流程**：
+
+> 💡 **参照示例**：`products/example-mac-cli/iterations/v1.0/test-points.md` 是一个完整的迭代测试输出示例，包含 56 个测试点，覆盖全部 7 种测试技术。
 
 1. 🔍 **理解变更** — 识别新增、修改、修复、配置变更
 2. 📊 **分析影响** — 基于模块依赖关系分析回归影响范围
@@ -250,23 +254,33 @@ ai-generated-testcases/
 │   └── product-init-checklist.md      ─   初始化检查清单
 │
 ├── products/                          ← 已初始化的产品知识库（自动生成，可多个产品共存）
-│   └── <产品名>/                      ─   如 products/product-a/、products/product-b/
+│   ├── example-mac-cli/               ─   🎯 参照示例：Mac CLI 工具（理解初始化与迭代的完整输出）
+│   │   ├── README.md                  ─       示例说明
+│   │   ├── product-overview.md        ─       初始化报告（4模块63功能点）
+│   │   ├── modules-index.md           ─       模块索引与依赖关系
+│   │   ├── modules/                   ─       各模块功能点详情
+│   │   │   ├── module-file-management.md
+│   │   │   ├── module-process-management.md
+│   │   │   ├── module-network-diagnostics.md
+│   │   │   └── module-system-information.md
+│   │   └── iterations/               ─       迭代测试记录
+│   │       └── v1.0/
+│   │           └── test-points.md     ─       56测试点，7种技术全覆盖
+│   └── <产品名>/                      ─   其他产品，如 products/product-a/、products/product-b/
 │       ├── product-overview.md        ─   产品概述
+│       ├── product-habits.md          ─   产品级记忆
 │       ├── modules-index.md           ─   模块索引
 │       ├── modules/                   ─   各模块功能点
-│       │   ├── module-auth.md
-│       │   └── ...
 │       └── iterations/               ─   各迭代测试记录
 │           └── <版本号>/
-│               ├── changelog.md
 │               └── test-points.md
 │
 ├── my-mind-maps/                      ← 思维导图输出目录
 │
-└── examples/                          ← 示例
+└── examples/                          ← 轻量示例
     └── login-feature/
-        ├── product-init-example.md    ─   初始化示例
-        └── iteration-test-example.md  ─   迭代测试示例（含SEC/PERF/CMP）
+        ├── product-init-example.md    ─   登录功能初始化示例
+        └── iteration-test-example.md  ─   登录功能迭代测试示例
 ```
 
 ---

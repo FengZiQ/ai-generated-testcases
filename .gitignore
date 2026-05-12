@@ -2,8 +2,7 @@
 requirements/*
 
 # 产品内容目录不提交
-products/*
-!products/.gitkeep
+products/geb8
 
 # 输出内容目录不提交
 my-mind-maps/*
